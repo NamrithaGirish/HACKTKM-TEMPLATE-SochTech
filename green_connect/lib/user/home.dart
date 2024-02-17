@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:green_connect/chat.dart';
+import 'package:green_connect/user/search_mentor.dart';
+import 'package:green_connect/user/user_profile.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({Key? key}) : super(key: key);
@@ -12,63 +14,112 @@ class UserHome extends StatefulWidget {
 }
 
 class _UserHomeState extends State<UserHome> {
+  final TextEditingController searchController = TextEditingController();
 
-  final TextEditingController searchController=TextEditingController();
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    // Perform different actions based on the selected index
+    switch (index) {
+      case 0:
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => UserHome()));
+        break;
+      case 1:
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => MentorPage()));
+        print('Search tapped');
+        break;
+      case 2:
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => UserProfilePage()));
+        print('Profile tapped');
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
-      ),
-      body:SingleChildScrollView(
-        child: Column(
-          children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Green Connect',
-              style: GoogleFonts.jura(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Green Connect',
+                  style: GoogleFonts.jura(
                       textStyle: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 25,
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      )
-                    ),
-            ),
+                    fontWeight: FontWeight.w900,
+                    fontSize: 25,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  )),
+                ),
+              ),
+              SizedBox(height: 20),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 2,
+                color: Colors.grey,
+              ),
+              SizedBox(height: 20),
+              MentorListTile(
+                name: 'Katherine T.',
+                description: 'Katherine specializes in corn and soybean crops.',
+                category: 'Crops',
+              ),
+              MentorListTile(
+                name: 'Jennifer W.',
+                description:
+                    'Hey there!I am an expert in soil composition and fertility.',
+                category: 'Soil Health',
+              ),
+              MentorListTile(
+                name: 'Michael S.',
+                description: 'Im here to answer the questions you might have',
+                category: 'Water Management',
+              ),
+              MentorListTile(
+                name: 'Judy L.',
+                description: 'I have 3 yrs experinece in pest management',
+                category: 'Plant Health',
+              ),
+            ],
           ),
-          SizedBox(height:20),
-          Container(width:MediaQuery.of(context).size.width,height:2,color: Colors.grey,),
-          SizedBox(height:20),
-          MentorListTile(
-            name: 'Katherine T.',
-            description: 'Katherine specializes in corn and soybean crops.',
-            category: 'Crops',
-          ),
-          MentorListTile(
-            name: 'Jennifer W.',
-            description: 'Hey there!I am an expert in soil composition and fertility.',
-            category: 'Soil Health',
-          ),
-          MentorListTile(
-            name: 'Michael S.',
-            description: 'Im here to answer the questions you might have',
-            category: 'Water Management',
-          ),
-          MentorListTile(
-            name: 'Judy L.',
-            description: 'I have 3 yrs experinece in pest management',
-            category: 'Plant Health',
-          ),
-          ],
         ),
-      )
-    );
+        bottomNavigationBar: BottomNavigationBar(
+          unselectedItemColor: Colors.black,
+          fixedColor: Colors.black,
+          // currentIndex: 0,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'My garden',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Search',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+        ));
   }
 }
 
@@ -97,7 +148,7 @@ class MentorListTile extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-        ), 
+        ),
         title: Text(
           name,
           style: TextStyle(
@@ -114,7 +165,6 @@ class MentorListTile extends StatelessWidget {
               ),
             ),
           ],
-          
         ),
         trailing: Text(
           '10:30 AM',
@@ -125,7 +175,8 @@ class MentorListTile extends StatelessWidget {
         ),
       ),
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ChatUI()));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => ChatUI()));
       },
     );
   }
