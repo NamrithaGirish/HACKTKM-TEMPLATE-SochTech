@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:green_connect/mentor/mentor_home.dart';
 import 'package:green_connect/mentor/mentor_profile.dart';
 import 'package:green_connect/user/home.dart';
 import 'package:green_connect/user/user_profile.dart';
@@ -68,8 +69,8 @@ class ButtonSection extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          GestureDetector(onTap:(){Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UserProfilePage()));},child: _buildButtonColumn(context, Icons.people, 'I\'m looking for guidance')),
-          GestureDetector(onTap: (){Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MentorProfile()));},child: _buildButtonColumn(context, Icons.laptop, 'I want to be a mentor')),
+          GestureDetector(onTap:(){Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UserHome()));},child: _buildButtonColumn(context, Icons.people, 'I\'m looking for guidance')),
+          GestureDetector(onTap: (){Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MentorHome()));},child: _buildButtonColumn(context, Icons.laptop, 'I want to be a mentor')),
         ],
       ),
     );

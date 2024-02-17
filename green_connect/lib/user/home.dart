@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:green_connect/chat.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({Key? key}) : super(key: key);
@@ -25,100 +26,25 @@ class _UserHomeState extends State<UserHome> {
           },
         ),
       ),
-      body: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-                  style: GoogleFonts.jura(
-                      textStyle: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14,
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      )
-                    ),
-                  textAlign: TextAlign.center,
-                  controller: searchController,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    filled: true,
-                    fillColor:Color(0xFFF2F5F0),
-                      hintText: "Search for mentors",
-                      hintStyle: GoogleFonts.jura(
-                      textStyle: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14,
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      )
-                    ),
-                      contentPadding: EdgeInsets.all(16),
-                  ),
-              ),
-          ),
+      body:SingleChildScrollView(
+        child: Column(
+          children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'Previously Contacted',
+              'Green Connect',
               style: GoogleFonts.jura(
                       textStyle: TextStyle(
                         fontWeight: FontWeight.w900,
-                        fontSize: 14,
+                        fontSize: 25,
                         color: Color.fromARGB(255, 0, 0, 0),
                       )
                     ),
             ),
           ),
-          Container(
-            height: 125,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                UserCard(
-                  name: 'Katherine T.',
-                  category: 'Crops',
-                ),
-                UserCard(
-                  name: 'Jennifer W.',
-                  category: 'Soil Health',
-                ),
-                UserCard(
-                  name: 'Michael S.',
-                  category: 'Water Management',
-                ),
-                UserCard(
-                  name: 'Judy L.',
-                  category: 'Plant Health',
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-            height: 40,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                TextButton(
-                  onPressed: () {},
-                  child: Text('All Mentors'),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text('By Expertise'),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text('By Plant Type'),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text('By Name'),
-                ),
-              ],
-            ),
-          ),
-          ),
+          SizedBox(height:20),
+          Container(width:MediaQuery.of(context).size.width,height:2,color: Colors.grey,),
+          SizedBox(height:20),
           MentorListTile(
             name: 'Katherine T.',
             description: 'Katherine specializes in corn and soybean crops.',
@@ -126,71 +52,22 @@ class _UserHomeState extends State<UserHome> {
           ),
           MentorListTile(
             name: 'Jennifer W.',
-            description: 'Jennifer is an expert in soil composition and fertility.',
+            description: 'Hey there!I am an expert in soil composition and fertility.',
             category: 'Soil Health',
           ),
           MentorListTile(
             name: 'Michael S.',
-            description: 'Michael has extensive experience in irrigation and drainage.',
+            description: 'Im here to answer the questions you might have',
             category: 'Water Management',
           ),
           MentorListTile(
             name: 'Judy L.',
-            description: 'Judy is a botanist specializing in plant diseases and pest management.',
+            description: 'I have 3 yrs experinece in pest management',
             category: 'Plant Health',
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class UserCard extends StatelessWidget {
-  final String name;
-  final String category;
-  const UserCard({
-    Key? key,
-    required this.name,
-    required this.category,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: 25,
-              backgroundColor: Colors.grey,
-              child: Text(
-                name[0],
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            SizedBox(height: 8),
-            Text(
-              name,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              'Category: $category',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
-              ),
-            ),
           ],
         ),
-      ),
+      )
     );
   }
 }
@@ -208,42 +85,48 @@ class MentorListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: CircleAvatar(
-        radius: 25,
-        backgroundColor: Colors.grey,
-        child: Text(
-          name[0],
-          style: TextStyle(
-            fontSize: 24,
-            color: Colors.white,
-          ),
-        ),
-      ), 
-      title: Text(
-        name,
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      subtitle: Column(
-        children: [
-          Text(
-            description,
+    return GestureDetector(
+      child: ListTile(
+        leading: CircleAvatar(
+          radius: 25,
+          backgroundColor: Colors.grey,
+          child: Text(
+            name[0],
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 24,
+              color: Colors.white,
             ),
           ),
-          Text(
-        'Category: $category',
-        style: TextStyle(
-          fontSize: 14,
-          color: Colors.grey,
+        ), 
+        title: Text(
+          name,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        subtitle: Column(
+          children: [
+            Text(
+              description,
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
+          ],
+          
+        ),
+        trailing: Text(
+          '10:30 AM',
+          style: TextStyle(
+            fontSize: 10,
+            color: Colors.grey,
+          ),
         ),
       ),
-        ],
-      ),
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ChatUI()));
+      },
     );
   }
 }
