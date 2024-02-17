@@ -46,34 +46,35 @@ class _UserHomeState extends State<UserHome> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+          toolbarHeight: 100,
+          title: Column(
+            children: [
+              Text('GREEN CONNECT',style: GoogleFonts.jura(
+                      textStyle: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 20,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  )),),
+              SizedBox(height: 10,),
+              Text(
+                  'My Chats',
+                  style: GoogleFonts.jura(
+                      textStyle: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 20,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  )),
+                )
+            ],
           ),
+          backgroundColor: Colors.lightGreen[200],
+          
         ),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Green Connect',
-                  style: GoogleFonts.jura(
-                      textStyle: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 25,
-                    color: Color.fromARGB(255, 0, 0, 0),
-                  )),
-                ),
-              ),
-              SizedBox(height: 20),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 2,
-                color: Colors.grey,
-              ),
+              
+              
               SizedBox(height: 20),
               MentorListTile(
                 name: 'Katherine T.',
@@ -141,13 +142,7 @@ class MentorListTile extends StatelessWidget {
         leading: CircleAvatar(
           radius: 25,
           backgroundColor: Colors.grey,
-          child: Text(
-            name[0],
-            style: TextStyle(
-              fontSize: 24,
-              color: Colors.white,
-            ),
-          ),
+          backgroundImage: NetworkImage('https://th.bing.com/th/id/R.50bfb50cc7e156ccca8dc6258047aca4?rik=xT8mAi9txYwWkw&riu=http%3a%2f%2fpelaez.fabianramirez.co%2fwp-content%2fuploads%2f2017%2f02%2fteam-2.jpg&ehk=HOHEsSS9yxRwVSSi%2bJLx0Mk%2fBYNm2qj8asedsPwwbkI%3d&risl=&pid=ImgRaw&r=0',)
         ),
         title: Text(
           name,

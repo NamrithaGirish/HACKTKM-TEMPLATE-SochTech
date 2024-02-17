@@ -20,7 +20,11 @@ class _ViewSelectState extends State<ViewSelect> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('GREEN CONNECT'),
+          title: Center(child: Text('GREEN CONNECT',style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )),
           backgroundColor: Colors.lightGreen[200],
         ),
         body: SingleChildScrollView(
@@ -39,7 +43,7 @@ class _ViewSelectState extends State<ViewSelect> {
                   'Choose one of the options below to get started.',
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.normal,
                   ),
                 ),
                 SizedBox(height: 8),

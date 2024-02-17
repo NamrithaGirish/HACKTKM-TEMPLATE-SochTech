@@ -58,7 +58,8 @@ class _MentorProfileState extends State<MentorProfile> {
               SizedBox(height: 20),
               CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage('assets/images/avatar.png'),
+                backgroundImage: NetworkImage('https://th.bing.com/th/id/R.50bfb50cc7e156ccca8dc6258047aca4?rik=xT8mAi9txYwWkw&riu=http%3a%2f%2fpelaez.fabianramirez.co%2fwp-content%2fuploads%2f2017%2f02%2fteam-2.jpg&ehk=HOHEsSS9yxRwVSSi%2bJLx0Mk%2fBYNm2qj8asedsPwwbkI%3d&risl=&pid=ImgRaw&r=0',)
+        ,
               ),
               SizedBox(height: 10),
               Text(
@@ -85,76 +86,7 @@ class _MentorProfileState extends State<MentorProfile> {
                 style: TextStyle(fontSize: 15, color: Colors.grey),
               ),
               SizedBox(height: 20),
-              Text(
-                'Current Clients',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              Expanded(
-                child: ListView(
-                  children: [
-                    ListTile(
-                      leading: CircleAvatar(
-                        radius: 25,
-                        backgroundColor: Colors.grey,
-                        child: Text(
-                          'K',
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      title: Text(
-                        'Katherine',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    ListTile(
-                      leading: CircleAvatar(
-                        radius: 25,
-                        backgroundColor: Colors.grey,
-                        child: Text(
-                          'K',
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      title: Text(
-                        'Katherine',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    ListTile(
-                      leading: CircleAvatar(
-                        radius: 25,
-                        backgroundColor: Colors.grey,
-                        child: Text(
-                          'K',
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      title: Text(
-                        'Katherine',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              
             ],
           ),
         ),
@@ -165,10 +97,6 @@ class _MentorProfileState extends State<MentorProfile> {
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'My garden',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Search',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
