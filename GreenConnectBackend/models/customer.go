@@ -1,6 +1,8 @@
 package models
 
 import (
+	"time"
+
 	"github.com/NamrithaGirish/GreenConnectBackend/utils"
 )
 
@@ -112,18 +114,35 @@ func (variable *Review) Save() (*Review, error) {
 	return variable, nil
 }
 
-type Tips struct {
-	ID       uint   `json:"id" gorm:"primaryKey;autoIncrement" form:"id"`
-	MentorID uint   `json:"mentor_id" gorm:"not null" form:"mentor_id"`
-	Tips     string `json:"tips" gorm:"not null" form:"tips"`
-	Active   bool   `json:"active" gorm:"not null" form:"active"`
-	Mentor   Mentor `gorm:"foreignKey:MentorID"`
+// type Tips struct {
+// 	ID       uint   `json:"id" gorm:"primaryKey;autoIncrement" form:"id"`
+// 	MentorID uint   `json:"mentor_id" gorm:"not null" form:"mentor_id"`
+// 	Tips     string `json:"tips" gorm:"not null" form:"tips"`
+// 	Active   bool   `json:"active" gorm:"not null" form:"active"`
+// 	Mentor   Mentor `gorm:"foreignKey:MentorID"`
+// }
+
+// func (variable *Tips) Save() (*Tips, error) {
+// 	err := utils.DB.Create(&variable).Error
+// 	if err != nil {
+// 		return &Tips{}, err
+// 	}
+// 	return variable, nil
+// }
+
+type Chat struct {
+	ID         uint      `json:"id" gorm:"primaryKey;autoIncrement" form:"id"`
+	MentorID   uint      `json:"mentor_id" gorm:"not null" form:"mentor_id"`
+	CustomerID uint      `json:"customer_id" gorm:"not null" form:"customer_id"`
+	CreatedAt  time.Time `json:"created_at"`
+	Customer   Customer  `gorm:"foreignKey:CustomerID"`
+	Mentor     Mentor    `gorm:"foreignKey:MentorID"`
 }
 
-func (variable *Tips) Save() (*Tips, error) {
+func (variable *Chat) Save() (*Chat, error) {
 	err := utils.DB.Create(&variable).Error
 	if err != nil {
-		return &Tips{}, err
+		return &Chat{}, err
 	}
 	return variable, nil
 }

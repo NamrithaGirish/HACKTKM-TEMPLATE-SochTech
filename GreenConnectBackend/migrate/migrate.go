@@ -12,6 +12,6 @@ func init() {
 }
 
 func main() {
-	utils.DB.AutoMigrate(&models.Customer{}, &models.Mentor{}, &models.Experience{}, &models.Education{}, &models.Connect{}, &models.Review{})
+	utils.DB.AutoMigrate(&models.Customer{}, &models.Mentor{}, &models.Experience{}, &models.Education{}, &models.Connect{}, &models.Review{}, &models.Chat{})
 	fmt.Println("? Migration complete")
 }

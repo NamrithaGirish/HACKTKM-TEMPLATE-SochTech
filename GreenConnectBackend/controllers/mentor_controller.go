@@ -354,3 +354,38 @@ func SetReview(context *gin.Context) {
 // 	context.JSON(http.StatusOK, gin.H{"message": "Tip added successfully", "tips": tips})
 
 // }
+
+func ChatSave(context *gin.Context) {
+	var input models.Chat
+	if err := context.ShouldBindJSON(&input); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	chat, err := input.Save()
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to add tip"})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"message": "Chat added successfully", "chat": chat})
+
+}
+
+func DisplayChat(context *gin.Context) {
+	var chat []models.Chat
+	sender_id, err := strconv.ParseUint(context.Param("sender_id"), 10, 64)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": "Incorrect user ID"})
+		return
+	}
+	receiver_id, err := strconv.ParseUint(context.Param("receiver_id"), 10, 64)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": "Incorrect user ID"})
+		return
+	}
+	utils.DB.Where("mentor_id = ? and customer_id = ?", sender_id, receiver_id).Order("created_time desc").Find(&chat)
+
+	context.JSON(http.StatusOK, chat)
+
+}
