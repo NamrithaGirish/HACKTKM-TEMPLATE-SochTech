@@ -14,6 +14,7 @@ class MentorProfile extends StatefulWidget {
 
 class _MentorProfileState extends State<MentorProfile> {
   int _selectedIndex = 0;
+  String _currentQuizLevel = ''; // Add a variable to store the current quiz level
 
   void _onItemTapped(int index) {
     setState(() {
@@ -39,72 +40,122 @@ class _MentorProfileState extends State<MentorProfile> {
     }
   }
 
+  void _startQuiz(String level) {
+    // TODO: Implement quiz logic for the selected level
+    // You can add the logic to navigate to the quiz screen or perform any other actions
+    _currentQuizLevel = level; // Set the current level
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          title: Text('Mentor Details'),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              SizedBox(height: 20),
-              CircleAvatar(
-                radius: 50,
-                backgroundImage: NetworkImage('https://th.bing.com/th/id/R.50bfb50cc7e156ccca8dc6258047aca4?rik=xT8mAi9txYwWkw&riu=http%3a%2f%2fpelaez.fabianramirez.co%2fwp-content%2fuploads%2f2017%2f02%2fteam-2.jpg&ehk=HOHEsSS9yxRwVSSi%2bJLx0Mk%2fBYNm2qj8asedsPwwbkI%3d&risl=&pid=ImgRaw&r=0',)
-        ,
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Gloria Kim',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                '@gloria.kim',
-                style: TextStyle(fontSize: 18, color: Colors.grey),
-              ),
-              Text(
-                'San Francisco, CA',
-                style: TextStyle(fontSize: 18, color: Colors.grey),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'About',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                'I\'m an agricultural engineer at Google. I specialize in sustainable farming, crop management, and technology in agriculture. I\'m passionate about mentoring and sharing my knowledge to support the next generation of agri-tech leaders.',
-                style: TextStyle(fontSize: 15, color: Colors.grey),
-              ),
-              SizedBox(height: 20),
-              
-            ],
-          ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          unselectedItemColor: Colors.black,
-          fixedColor: Colors.black,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'My garden',
+        title: Text('Mentor Details'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            SizedBox(height: 20),
+            CircleAvatar(
+              radius: 50,
+              backgroundImage: AssetImage('assets/images/plant.jpg'),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
+            SizedBox(height: 10),
+            Text(
+              'Gloria Kim',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'San Francisco, CA',
+              style: TextStyle(fontSize: 18, color: Colors.grey),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            SizedBox(height: 20),
+            Text(
+              'About',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'I\'m an agricultural engineer at Google. I specialize in sustainable farming, crop management, and technology in agriculture. I\'m passionate about mentoring and sharing my knowledge to support the next generation of agri-tech leaders.',
+              style: TextStyle(fontSize: 15, color: Colors.grey),
+            ),
+            Text(
+              'Quiz',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            // Container for Quiz Levels
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    // TODO: Implement quiz logic for beginner level
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen,
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  ),
+                  child: Text('Beginner Quiz', style: TextStyle(fontSize: 12)),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // TODO: Implement quiz logic for intermediate level
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen,
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  ),
+                  child: Text('Intermediate Quiz', style: TextStyle(fontSize: 12)),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // TODO: Implement quiz logic for expert level
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen,
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  ),
+                  child: Text('Expert Quiz', style: TextStyle(fontSize: 12)),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Current Quiz Level: $_currentQuizLevel', // Display current level
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ],
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-        ));
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: Colors.black,
+        fixedColor: Colors.black,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'My garden',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+      ),
+    );
   }
 }
