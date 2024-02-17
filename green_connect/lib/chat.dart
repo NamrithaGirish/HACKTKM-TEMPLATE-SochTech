@@ -157,6 +157,7 @@ class _ChatUIState extends State<ChatUI> {
           ],
         ),
       ),
+      
     );
   }
 }
