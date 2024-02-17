@@ -9,16 +9,22 @@ import 'package:http_parser/http_parser.dart';
 
 class ApiService {
 
-  Future<int?> getUsersByMail(String email) async {
+
+  Future<List<dynamic>?> getUserByID(int id) async {
     try {
-      var url =
-          Uri.parse(ApiConstants.baseUrl + ApiConstants.getUserByMail + email);
-      var response = await http.get(url);
+      var url = Uri.parse(
+          ApiConstants.baseUrl + ApiConstants.getUserByID + id.toString());
+          
+      var response = await http.get(url,headers:{'ngrok-skip-browser-warning':'true'} );
       if (response.statusCode == 200) {
-        Map<String, dynamic> responseBody = json.decode(response.body);
-        Map<String, dynamic> user = responseBody['user'];
+        print("hello");
+        List<dynamic> responseBody = json.decode(response.body);
+        print(responseBody.runtimeType);
+        List<dynamic> user = responseBody;
+        
+        print(user[0]);
         //print(user['id']);
-        return user['id'];
+        return user;
       }
     } catch (e) {
       log(e.toString());
@@ -26,18 +32,22 @@ class ApiService {
     return null;
   }
 
-  Future<Map<String, dynamic>?> getUserByID(int id) async {
+  Future<List<dynamic>?> getPrevMent(int id) async {
     try {
       var url = Uri.parse(
-          ApiConstants.baseUrl + ApiConstants.getUserByID + id.toString());
-      var response = await http.get(url);
+          ApiConstants.baseUrl + ApiConstants.prevCont + id.toString());
+          
+      var response = await http.get(url,headers:{'ngrok-skip-browser-warning':'true'} );
       if (response.statusCode == 200) {
-        Map<String, dynamic> responseBody = json.decode(response.body);
-        Map<String, dynamic> user = responseBody[0];
-        print("helooo");
-        print(responseBody[0]);
+        print("hello");
+        print(response.body);
+        Map<String,dynamic> responseBody = json.decode(response.body);
+        print(responseBody);
+       // List<dynamic> user = responseBody;
+        
+        print(responseBody["prev_mentors"]);
         //print(user['id']);
-        return user;
+        return responseBody["prev_mentors"];
       }
     } catch (e) {
       log(e.toString());

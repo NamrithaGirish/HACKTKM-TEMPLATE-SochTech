@@ -15,6 +15,9 @@ class UserProfilePage extends StatefulWidget {
 class _UserProfilePageState extends State<UserProfilePage> {
   int _selectedIndex = 0;
   String name='';
+  String location='';
+  String email='';
+  String desc='';
 
   @override
   void initState() {
@@ -49,11 +52,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
   Future<void> _setProfile() async {
     try {
-      Future<Map<String, dynamic>?> user = ApiService().getUserByID(1);
-      Map<String, dynamic>? value = await user;
+      Future<List<dynamic>?> user = ApiService().getUserByID(1);
+      List<dynamic>? value = await user;
       if (value != null) {
         setState(() {
-          name=value['name'];
+          name=value[0]["name"];
+          location=value[0]["location"];
+          desc=value[0]["description"];
+          email=value[0]["gmail"];
         });
       }
     } catch (error) {
@@ -79,7 +85,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           SizedBox(height: 20),
           CircleAvatar(
             radius: 50,
-            backgroundImage: AssetImage('assets/images/avatar.png'),
+            backgroundImage: AssetImage('assets/images/chat.png'),
           ),
           SizedBox(height: 10),
           Text(
@@ -87,11 +93,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           Text(
-            '@gloria.kim',
-            style: TextStyle(fontSize: 18, color: Colors.grey),
-          ),
-          Text(
-            'San Francisco, CA',
+            location,
             style: TextStyle(fontSize: 18, color: Colors.grey),
           ),
           SizedBox(height: 20),
@@ -101,7 +103,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             ),
             SizedBox(height: 10),
           Text(
-              'Description',
+              desc,
               style: TextStyle(fontSize: 14,color: Colors.grey),
             ),
           Expanded(
@@ -109,7 +111,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
               children: [
                 ListTile(
                   leading: Icon(Icons.email),
-                  title: Text('gloria.kim@gmail.com'),
+                  title: Text(email),
                 ),
                 
               ],

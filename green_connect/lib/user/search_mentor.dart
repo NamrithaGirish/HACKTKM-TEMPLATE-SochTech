@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:green_connect/api/api_constants.dart';
+import 'package:green_connect/api/api_services.dart';
 import 'package:green_connect/user/home.dart';
 import 'package:green_connect/user/user_profile.dart';
 
@@ -15,6 +17,8 @@ class MentorPage extends StatefulWidget {
 class _MentorPageState extends State<MentorPage> {
   final TextEditingController searchController = TextEditingController();
   int _selectedIndex = 0;
+  int length=0;
+  List<dynamic>? mentors;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -38,6 +42,28 @@ class _MentorPageState extends State<MentorPage> {
         print('Profile tapped');
         break;
     }
+  }
+
+  Future<void> _setProfile() async {
+    try {
+      Future<List<dynamic>?> user = ApiService().getPrevMent(ApiConstants.id);
+      List<dynamic>? value = await user;
+      if (value != null) {
+        setState(() {
+          length=value.length;
+          mentors=value;
+        });
+      }
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _setProfile();
   }
 
   @override
@@ -96,22 +122,13 @@ class _MentorPageState extends State<MentorPage> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  MentorCard(
-                    name: 'Katherine T.',
-                    category: 'Crops',
+                  for(int i=0;i<length;i++)...[
+                    MentorCard(
+                    name: mentors![i]["name"],
+                    category: mentors![i]["domain"],
                   ),
-                  MentorCard(
-                    name: 'Jennifer W.',
-                    category: 'Soil Health',
-                  ),
-                  MentorCard(
-                    name: 'Michael S.',
-                    category: 'Water Management',
-                  ),
-                  MentorCard(
-                    name: 'Judy L.',
-                    category: 'Plant Health',
-                  ),
+                  ],
+                  
                 ],
               ),
             ),

@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:green_connect/api/api_constants.dart';
+import 'package:green_connect/api/api_services.dart';
 import 'package:green_connect/chat.dart';
 import 'package:green_connect/user/search_mentor.dart';
 import 'package:green_connect/user/user_profile.dart';
@@ -15,8 +17,30 @@ class UserHome extends StatefulWidget {
 
 class _UserHomeState extends State<UserHome> {
   final TextEditingController searchController = TextEditingController();
-
+  int length=0;
+  List<dynamic>? mentors;
   int _selectedIndex = 0;
+  Future<void> _setProfile() async {
+    try {
+      Future<List<dynamic>?> user = ApiService().getPrevMent(ApiConstants.id);
+      List<dynamic>? value = await user;
+      if (value != null) {
+        setState(() {
+          length=value.length;
+          mentors=value;
+        });
+      }
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _setProfile();
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -76,27 +100,14 @@ class _UserHomeState extends State<UserHome> {
               
               
               SizedBox(height: 20),
-              MentorListTile(
-                name: 'Katherine T.',
-                description: 'Katherine specializes in corn and soybean crops.',
-                category: 'Crops',
+              for(int i=0;i<length;i++)...[
+                MentorListTile(
+                name: mentors![i]['name'],
+                description: mentors![i]['description'],
+                category: mentors![i]['domain'],
               ),
-              MentorListTile(
-                name: 'Jennifer W.',
-                description:
-                    'Hey there!I am an expert in soil composition and fertility.',
-                category: 'Soil Health',
-              ),
-              MentorListTile(
-                name: 'Michael S.',
-                description: 'Im here to answer the questions you might have',
-                category: 'Water Management',
-              ),
-              MentorListTile(
-                name: 'Judy L.',
-                description: 'I have 3 yrs experinece in pest management',
-                category: 'Plant Health',
-              ),
+              ],
+            
             ],
           ),
         ),
