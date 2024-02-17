@@ -116,6 +116,7 @@ type Tips struct {
 	ID       uint   `json:"id" gorm:"primaryKey;autoIncrement" form:"id"`
 	MentorID uint   `json:"mentor_id" gorm:"not null" form:"mentor_id"`
 	Tips     string `json:"tips" gorm:"not null" form:"tips"`
+	Active   bool   `json:"active" gorm:"not null" form:"active"`
 	Mentor   Mentor `gorm:"foreignKey:MentorID"`
 }
 
