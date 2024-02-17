@@ -191,3 +191,166 @@ func GetAllOtherMentors(context *gin.Context) {
 
 	context.JSON(http.StatusOK, gin.H{"other_mentors": mentor_list})
 }
+
+func GetMentorsByName(context *gin.Context) {
+	// var connect []models.Connect
+	var mentor_list []models.Mentor
+	user_id, err := strconv.ParseUint(context.Param("id"), 10, 64)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": "Incorrect user ID"})
+		return
+	}
+	// Query the database to get the first five users with the maximum points
+	subquery := utils.DB.Model(&models.Connect{}).Where("customer_id = ?", user_id).Select("mentor_id")
+
+	// Fetch mentors not connected to the user
+	err = utils.DB.Where("id NOT IN (?)", subquery).Order("name").Find(&mentor_list).Error
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"other_mentors": mentor_list})
+}
+func GetMentorsByDomain(context *gin.Context) {
+	// var connect []models.Connect
+	var mentor_list []models.Mentor
+	user_id, err := strconv.ParseUint(context.Param("id"), 10, 64)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": "Incorrect user ID"})
+		return
+	}
+	// Query the database to get the first five users with the maximum points
+	subquery := utils.DB.Model(&models.Connect{}).Where("customer_id = ?", user_id).Select("mentor_id")
+
+	// Fetch mentors not connected to the user
+	err = utils.DB.Where("id NOT IN (?)", subquery).Order("domain").Find(&mentor_list).Error
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"other_mentors": mentor_list})
+}
+func GetMentorsByRating(context *gin.Context) {
+	// var connect []models.Connect
+	var mentor_list []models.Mentor
+	user_id, err := strconv.ParseUint(context.Param("id"), 10, 64)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": "Incorrect user ID"})
+		return
+	}
+	// Query the database to get the first five users with the maximum points
+	subquery := utils.DB.Model(&models.Connect{}).Where("customer_id = ?", user_id).Select("mentor_id")
+
+	// Fetch mentors not connected to the user
+	err = utils.DB.Where("id NOT IN (?)", subquery).Order("rating").Find(&mentor_list).Error
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"other_mentors": mentor_list})
+}
+func GetCustomerProfile(context *gin.Context) {
+	var customer []models.Customer
+	user_id, err := strconv.ParseUint(context.Param("id"), 10, 64)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": "Incorrect user ID"})
+		return
+	}
+	err = utils.DB.First(&customer, user_id).Error
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	context.JSON(http.StatusOK, customer)
+}
+func GetMentorProfile(context *gin.Context) {
+	var mentor []models.Mentor
+	user_id, err := strconv.ParseUint(context.Param("id"), 10, 64)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": "Incorrect user ID"})
+		return
+	}
+	err = utils.DB.First(&mentor, user_id).Error
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	var educationList []models.Education
+	err = utils.DB.Where("mentor_id = ?", user_id).Find(&educationList).Error
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	var experienceList []models.Education
+	err = utils.DB.Where("mentor_id = ?", user_id).Find(&experienceList).Error
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	context.JSON(http.StatusOK, gin.H{"error": mentor, "education": educationList, "experience": experienceList})
+}
+
+func SetReview(context *gin.Context) {
+	var input models.Review
+	if err := context.ShouldBindJSON(&input); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	review, err := input.Save()
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to add review"})
+		return
+	}
+	var mentor models.Mentor
+
+	if err := utils.DB.First(&mentor, review.MentorID).Error; err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to find mentor"})
+		return
+	}
+
+	// Calculate the average rating for the mentor
+	var totalRatings int
+	var averageRating float64
+	var reviews []models.Review
+	if err := utils.DB.Where("mentor_id = ?", mentor.ID).Find(&reviews).Error; err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch reviews"})
+		return
+	}
+	for _, r := range reviews {
+		totalRatings += r.Rating
+	}
+	if len(reviews) > 0 {
+		averageRating = float64(totalRatings) / float64(len(reviews))
+	}
+
+	// Update the mentor's rating
+	mentor.Rating = int(averageRating)
+	if err := utils.DB.Save(&mentor).Error; err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update mentor's rating"})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"message": "Review added successfully"})
+
+}
+
+// func SetTips(context *gin.Context) {
+// 	var input models.Tips
+// 	if err := context.ShouldBindJSON(&input); err != nil {
+// 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+// 		return
+// 	}
+// 	tips, err := input.Save()
+// 	if err != nil {
+// 		context.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to add tip"})
+// 		return
+// 	}
+
+// 	context.JSON(http.StatusOK, gin.H{"message": "Tip added successfully", "tips": tips})
+
+// }

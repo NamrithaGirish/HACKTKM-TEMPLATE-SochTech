@@ -32,6 +32,7 @@ type Mentor struct {
 	ClientCount int    `json:"client_count" gorm:"default:0" form:"client_count"`
 	Limit       int    `json:"limit" gorm:"default:2" form:"limit"`
 	Rating      int    `json:"rating" gorm:"default:0" form:"rating"`
+	Resume      string `json:"resume" gorm:"default:0" form:"resume"`
 }
 
 func (variable *Mentor) Save() (*Mentor, error) {
@@ -89,6 +90,39 @@ func (variable *Connect) Save() (*Connect, error) {
 	err := utils.DB.Create(&variable).Error
 	if err != nil {
 		return &Connect{}, err
+	}
+	return variable, nil
+}
+
+type Review struct {
+	ID         uint     `json:"id" gorm:"primaryKey;autoIncrement" form:"id"`
+	CustomerID uint     `json:"customer_id" gorm:"not null" form:"customer_id"`
+	MentorID   uint     `json:"mentor_id" gorm:"not null" form:"mentor_id"`
+	Rating     int      `json:"rating" form:"rating"`
+	Review     string   `json:"review" form:"review"`
+	Customer   Customer `gorm:"foreignKey:CustomerID"`
+	Mentor     Mentor   `gorm:"foreignKey:MentorID"`
+}
+
+func (variable *Review) Save() (*Review, error) {
+	err := utils.DB.Create(&variable).Error
+	if err != nil {
+		return &Review{}, err
+	}
+	return variable, nil
+}
+
+type Tips struct {
+	ID       uint   `json:"id" gorm:"primaryKey;autoIncrement" form:"id"`
+	MentorID uint   `json:"mentor_id" gorm:"not null" form:"mentor_id"`
+	Tips     string `json:"tips" gorm:"not null" form:"tips"`
+	Mentor   Mentor `gorm:"foreignKey:MentorID"`
+}
+
+func (variable *Tips) Save() (*Tips, error) {
+	err := utils.DB.Create(&variable).Error
+	if err != nil {
+		return &Tips{}, err
 	}
 	return variable, nil
 }
