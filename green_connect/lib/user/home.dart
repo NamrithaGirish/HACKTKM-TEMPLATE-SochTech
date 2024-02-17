@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:green_connect/chat.dart';
 import 'package:green_connect/user/search_mentor.dart';
+import 'package:green_connect/user/user_profile.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -64,9 +65,9 @@ class Home extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const [
+        items:  [
           BottomNavigationBarItem(
-            icon: Icon(Icons.person,color: Colors.black,),
+            icon: GestureDetector(child: Icon(Icons.person,color: Colors.black,),onTap: (){Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UserProfilePage()));},),
             label: 'Profile',
           ),
           BottomNavigationBarItem(
