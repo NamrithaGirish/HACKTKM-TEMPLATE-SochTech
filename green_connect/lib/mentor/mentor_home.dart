@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:green_connect/api/api_services.dart';
 import 'package:green_connect/chat.dart';
 import 'package:green_connect/mentor/mentor_profile.dart';
 import 'package:green_connect/user/home.dart';
@@ -18,11 +19,26 @@ class MentorHome extends StatefulWidget {
 class _MentorHomeState extends State<MentorHome> {
   final TextEditingController searchController = TextEditingController();
   int _selectedIndex = 0;
+  List<dynamic>? mentors;
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+
+    Future<void> _setProfile() async {
+    try {
+      Future<List<dynamic>?> user = ApiService().getUserByID(1);
+      List<dynamic>? value = await user;
+      if (value != null) {
+        setState(() {
+          mentors=value;
+        });
+      }
+    } catch (error) {
+      print(error);
+    }
+  }
 
     // Perform different actions based on the selected index
     switch (index) {

@@ -55,6 +55,29 @@ class ApiService {
     return null;
   }
 
+    Future<List<dynamic>?> getMent(int id) async {
+    try {
+      var url = Uri.parse(
+          ApiConstants.baseUrl + ApiConstants.getMentor + id.toString());
+          
+      var response = await http.get(url,headers:{'ngrok-skip-browser-warning':'true'} );
+      if (response.statusCode == 200) {
+        print("hello");
+        print(response.body);
+        Map<String,dynamic> responseBody = json.decode(response.body);
+        print(responseBody);
+       // List<dynamic> user = responseBody;
+        
+        print(responseBody["error"]);
+        //print(user['id']);
+        return responseBody["error"];
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
+
   Future<List<String>> allTeams() async {
     try {
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.allTeams);

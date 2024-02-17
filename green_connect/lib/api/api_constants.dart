@@ -7,7 +7,7 @@ class ApiConstants {
   static String teamMember = '/all-members/';
   static String addComments = '/comments';
   static String displayComments= '/comments/';
-  static String getUserByMail = '/login/';
+  static String getMentor = '/mentor-profile/';
   static String update = '/update/';
   static int id=1;
 }
