@@ -40,6 +40,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  file_picker: ^4.0.10
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -66,6 +67,8 @@ flutter:
     - assets/images/bg.jpg
     - assets/images/chat.png
     - assets/images/pottedplant.jpg
+    - assets/images/user.png
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
