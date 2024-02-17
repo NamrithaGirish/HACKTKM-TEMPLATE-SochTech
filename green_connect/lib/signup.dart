@@ -7,6 +7,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       body: Stack(
         children: [
           // Background image
@@ -37,7 +38,7 @@ class LoginScreen extends StatelessWidget {
                         'Green Connect',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 50.0,
+                          fontSize: MediaQuery.of(context).size.width/9,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

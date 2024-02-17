@@ -12,7 +12,7 @@ class ViewSelect extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: Text('Choose your role'),
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.lightGreen[200],
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -66,7 +66,7 @@ class ButtonSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16),
-      child: Row(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           GestureDetector(onTap:(){Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UserHome()));},child: _buildButtonColumn(context, Icons.people, 'I\'m looking for guidance')),
@@ -77,22 +77,32 @@ class ButtonSection extends StatelessWidget {
   }
 
   Widget _buildButtonColumn(BuildContext context, IconData icon, String label) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
+  return Container(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(icon, color: Colors.green[500]),
-        SizedBox(height: 8),
+        Icon(
+          icon,
+          size: 50,  // Adjust the size as per your requirement
+          color: Colors.lightGreen[200],  // Add your desired color
+        ),
+        SizedBox(width: 20,),
         Text(
           label,
+          textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-            color: Colors.green[500],
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
           ),
         ),
+        SizedBox(
+          height: 20,
+        )
       ],
-    );
-  }
+    ),
+  );
+}
 }
 
 

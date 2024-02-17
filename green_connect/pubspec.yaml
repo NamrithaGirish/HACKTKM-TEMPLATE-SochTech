@@ -65,6 +65,7 @@ flutter:
     - assets/images/plant.jpg
     - assets/images/bg.jpg
     - assets/images/chat.png
+    - assets/images/pottedplant.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
