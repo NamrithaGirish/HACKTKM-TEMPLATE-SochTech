@@ -3,6 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:green_connect/chat.dart';
+import 'package:green_connect/mentor/mentor_profile.dart';
+import 'package:green_connect/user/home.dart';
+import 'package:green_connect/user/search_mentor.dart';
+import 'package:green_connect/user/user_profile.dart';
 
 class MentorHome extends StatefulWidget {
   const MentorHome({Key? key}) : super(key: key);
@@ -12,136 +16,160 @@ class MentorHome extends StatefulWidget {
 }
 
 class _MentorHomeState extends State<MentorHome> {
+  final TextEditingController searchController = TextEditingController();
+  int _selectedIndex = 0;
 
-  final TextEditingController searchController=TextEditingController();
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    // Perform different actions based on the selected index
+    switch (index) {
+      case 0:
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => MentorHome()));
+        break;
+      // case 1:
+      //   Navigator.of(context)
+      //       .push(MaterialPageRoute(builder: (context) => MentorPage()));
+      //   print('Search tapped');
+      //   break;
+      case 1:
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => MentorProfile()));
+        print('Profile tapped');
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
-      ),
-      body:SingleChildScrollView(
-        child: Column(
-          children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Green Connect',
-              style: GoogleFonts.jura(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Green Connect',
+                  style: GoogleFonts.jura(
                       textStyle: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 25,
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      )
+                    fontWeight: FontWeight.w900,
+                    fontSize: 25,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  )),
+                ),
+              ),
+              SizedBox(height: 20),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 2,
+                color: Colors.grey,
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Current Clients',
+                style: GoogleFonts.jura(
+                    textStyle: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 15,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                )),
+              ),
+              SizedBox(height: 20),
+              MentorListTile(
+                name: 'Katherine T.',
+                description: 'Katherine specializes in corn and soybean crops.',
+                category: 'Crops',
+              ),
+              SizedBox(height: 10),
+              MentorListTile(
+                name: 'Jennifer W.',
+                description:
+                    'Hey there!I am an expert in soil composition and fertility.',
+                category: 'Soil Health',
+              ),
+              SizedBox(height: 10),
+              MentorListTile(
+                name: 'Michael S.',
+                description: 'Im here to answer the questions you might have',
+                category: 'Water Management',
+              ),
+              SizedBox(height: 10),
+              MentorListTile(
+                name: 'Judy L.',
+                description: 'I have 3 yrs experinece in pest management',
+                category: 'Plant Health',
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Previous Clients',
+                style: GoogleFonts.jura(
+                    textStyle: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 15,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                )),
+              ),
+              SizedBox(height: 20),
+              Container(
+                height: 125,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    MentorCard(
+                      name: 'Katherine T.',
+                      category: 'Crops',
                     ),
-            ),
-          ),
-          SizedBox(height:20),
-          Container(width:MediaQuery.of(context).size.width,height:2,color: Colors.grey,),
-          SizedBox(height:20),
-          Text(
-              'Current Clients',
-              style: GoogleFonts.jura(
-                      textStyle: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 15,
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      )
+                    MentorCard(
+                      name: 'Jennifer W.',
+                      category: 'Soil Health',
                     ),
-            ),
-            SizedBox(height:20),
-          MentorListTile(
-            name: 'Katherine T.',
-            description: 'Katherine specializes in corn and soybean crops.',
-            category: 'Crops',
-          ),
-          SizedBox(height:10),
-          MentorListTile(
-            name: 'Jennifer W.',
-            description: 'Hey there!I am an expert in soil composition and fertility.',
-            category: 'Soil Health',
-          ),
-          SizedBox(height:10),
-          MentorListTile(
-            name: 'Michael S.',
-            description: 'Im here to answer the questions you might have',
-            category: 'Water Management',
-          ),
-          SizedBox(height:10),
-          MentorListTile(
-            name: 'Judy L.',
-            description: 'I have 3 yrs experinece in pest management',
-            category: 'Plant Health',
-          ),
-
-          SizedBox(height: 20,),
-          Text(
-              'Previous Clients',
-              style: GoogleFonts.jura(
-                      textStyle: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 15,
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      )
+                    MentorCard(
+                      name: 'Michael S.',
+                      category: 'Water Management',
                     ),
-            ),
-            SizedBox(height:20),
-            Container(
-            height: 125,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                MentorCard(
-                  name: 'Katherine T.',
-                  category: 'Crops',
+                    MentorCard(
+                      name: 'Judy L.',
+                      category: 'Plant Health',
+                    ),
+                  ],
                 ),
-                MentorCard(
-                  name: 'Jennifer W.',
-                  category: 'Soil Health',
-                ),
-                MentorCard(
-                  name: 'Michael S.',
-                  category: 'Water Management',
-                ),
-                MentorCard(
-                  name: 'Judy L.',
-                  category: 'Plant Health',
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          unselectedItemColor: Colors.black,
+          fixedColor: Colors.black,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'My garden',
+            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.search),
+            //   label: 'Search',
+            // ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+            ),
           ],
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        unselectedItemColor: Colors.black,
-        fixedColor: Colors.black,
-        currentIndex: 0,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'My garden',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book),
-            label: 'Plantbook',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],)
-    );
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+        ));
   }
 }
 
@@ -170,7 +198,7 @@ class MentorListTile extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-        ), 
+        ),
         title: Text(
           name,
           style: TextStyle(
@@ -178,7 +206,6 @@ class MentorListTile extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        
         trailing: Text(
           '10:30 AM',
           style: TextStyle(
@@ -188,14 +215,12 @@ class MentorListTile extends StatelessWidget {
         ),
       ),
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ChatUI()));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => ChatUI()));
       },
     );
   }
-
-  
 }
-
 
 class MentorCard extends StatelessWidget {
   final String name;

@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:green_connect/user/home.dart';
+import 'package:green_connect/user/user_profile.dart';
 
 class MentorPage extends StatefulWidget {
   const MentorPage({Key? key}) : super(key: key);
@@ -11,137 +13,180 @@ class MentorPage extends StatefulWidget {
 }
 
 class _MentorPageState extends State<MentorPage> {
+  final TextEditingController searchController = TextEditingController();
+  int _selectedIndex = 0;
 
-  final TextEditingController searchController=TextEditingController();
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    // Perform different actions based on the selected index
+    switch (index) {
+      case 0:
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => UserHome()));
+        break;
+      case 1:
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => MentorPage()));
+        print('Search tapped');
+        break;
+      case 2:
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => UserProfilePage()));
+        print('Profile tapped');
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
-      ),
-      body: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-                  style: GoogleFonts.jura(
+        body: ListView(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                style: GoogleFonts.jura(
+                    textStyle: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                )),
+                textAlign: TextAlign.center,
+                controller: searchController,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.search),
+                  filled: true,
+                  fillColor: Color(0xFFF2F5F0),
+                  hintText: "Search for mentors",
+                  hintStyle: GoogleFonts.jura(
                       textStyle: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14,
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      )
-                    ),
-                  textAlign: TextAlign.center,
-                  controller: searchController,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    filled: true,
-                    fillColor:Color(0xFFF2F5F0),
-                      hintText: "Search for mentors",
-                      hintStyle: GoogleFonts.jura(
-                      textStyle: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14,
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      )
-                    ),
-                      contentPadding: EdgeInsets.all(16),
-                  ),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  )),
+                  contentPadding: EdgeInsets.all(16),
+                ),
               ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Previously Contacted',
-              style: GoogleFonts.jura(
-                      textStyle: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 14,
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      )
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Previously Contacted',
+                style: GoogleFonts.jura(
+                    textStyle: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 14,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                )),
+              ),
+            ),
+            Container(
+              height: 125,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  MentorCard(
+                    name: 'Katherine T.',
+                    category: 'Crops',
+                  ),
+                  MentorCard(
+                    name: 'Jennifer W.',
+                    category: 'Soil Health',
+                  ),
+                  MentorCard(
+                    name: 'Michael S.',
+                    category: 'Water Management',
+                  ),
+                  MentorCard(
+                    name: 'Judy L.',
+                    category: 'Plant Health',
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 40,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    TextButton(
+                      onPressed: () {},
+                      child: Text('All Mentors'),
                     ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text('By Expertise'),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text('By Plant Type'),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text('By Name'),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-          Container(
-            height: 125,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                MentorCard(
-                  name: 'Katherine T.',
-                  category: 'Crops',
-                ),
-                MentorCard(
-                  name: 'Jennifer W.',
-                  category: 'Soil Health',
-                ),
-                MentorCard(
-                  name: 'Michael S.',
-                  category: 'Water Management',
-                ),
-                MentorCard(
-                  name: 'Judy L.',
-                  category: 'Plant Health',
-                ),
-              ],
+            MentorListTile(
+              name: 'Katherine T.',
+              description: 'Katherine specializes in corn and soybean crops.',
+              category: 'Crops',
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-            height: 40,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                TextButton(
-                  onPressed: () {},
-                  child: Text('All Mentors'),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text('By Expertise'),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text('By Plant Type'),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text('By Name'),
-                ),
-              ],
+            MentorListTile(
+              name: 'Jennifer W.',
+              description:
+                  'Jennifer is an expert in soil composition and fertility.',
+              category: 'Soil Health',
             ),
-          ),
-          ),
-          MentorListTile(
-            name: 'Katherine T.',
-            description: 'Katherine specializes in corn and soybean crops.',
-            category: 'Crops',
-          ),
-          MentorListTile(
-            name: 'Jennifer W.',
-            description: 'Jennifer is an expert in soil composition and fertility.',
-            category: 'Soil Health',
-          ),
-          MentorListTile(
-            name: 'Michael S.',
-            description: 'Michael has extensive experience in irrigation and drainage.',
-            category: 'Water Management',
-          ),
-          MentorListTile(
-            name: 'Judy L.',
-            description: 'Judy is a botanist specializing in plant diseases and pest management.',
-            category: 'Plant Health',
-          ),
-        ],
-      ),
-    );
+            MentorListTile(
+              name: 'Michael S.',
+              description:
+                  'Michael has extensive experience in irrigation and drainage.',
+              category: 'Water Management',
+            ),
+            MentorListTile(
+              name: 'Judy L.',
+              description:
+                  'Judy is a botanist specializing in plant diseases and pest management.',
+              category: 'Plant Health',
+            ),
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          unselectedItemColor: Colors.black,
+          fixedColor: Colors.black,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'My garden',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Search',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+        ));
   }
 }
 
@@ -219,7 +264,7 @@ class MentorListTile extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-      ), 
+      ),
       title: Text(
         name,
         style: TextStyle(
@@ -236,12 +281,12 @@ class MentorListTile extends StatelessWidget {
             ),
           ),
           Text(
-        'Category: $category',
-        style: TextStyle(
-          fontSize: 14,
-          color: Colors.grey,
-        ),
-      ),
+            'Category: $category',
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey,
+            ),
+          ),
         ],
       ),
     );

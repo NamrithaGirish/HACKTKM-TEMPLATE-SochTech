@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:green_connect/user/search_mentor.dart';
+import 'package:green_connect/user/user_profile.dart';
 
 class Schemes extends StatefulWidget {
   @override
@@ -6,6 +8,31 @@ class Schemes extends StatefulWidget {
 }
 
 class _SchemesState extends State<Schemes> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    // Perform different actions based on the selected index
+    switch (index) {
+      case 0:
+        // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>()));
+        break;
+      case 1:
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => MentorPage()));
+        print('Search tapped');
+        break;
+      case 2:
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => UserProfilePage()));
+        print('Profile tapped');
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,7 +112,8 @@ class _SchemesState extends State<Schemes> {
             label: 'Chat',
           ),
         ],
-        currentIndex: 2,
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
         selectedItemColor: Colors.amber[800],
       ),
     );
