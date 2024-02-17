@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_admin_scaffold/admin_scaffold.dart';
-import 'package:flutter_responsive/flutter_responsive.dart';
 
 // A custom widget class to represent a menu item
 class MenuItem extends StatelessWidget {

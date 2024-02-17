@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
 import 'package:flutter/material.dart';
+import 'package:green_connect/login.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -27,16 +28,16 @@ class LoginScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        'assets/images/plant.jpg',
-                        height: 64.0,
-                        width: 64.0,
-                      ),
+                      // Image.network(
+                      //   'https://img.freepik.com/free-vector/lines-cycle-leaf_78370-1735.jpg?w=740&t=st=1708115016~exp=1708115616~hmac=805d5cf8093d51c99c6d1d44d1729bac0f94ea33d4e2cd6ade541f377e70a1c7',
+                      //   height: 64.0,
+                      //   width: 64.0,
+                      // ),
                       Text(
                         'Green Connect',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 32.0,
+                          fontSize: 50.0,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -55,42 +56,38 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                // User name and password fields
-                
-                // Forgot password button
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
+                // Login button
+                SizedBox(height: 100,),
+                Container(
+                  width: 250,
+                  child: ElevatedButton(
                     onPressed: () {
-                      // Handle forgot password
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ViewSelect()));
                     },
-                    child: Text(
-                      'Forgot Password?',
-                      style: TextStyle(color: Colors.white),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/google.png', // Replace with your image asset path
+                        height: 24.0,
+                        width: 24.0,
+                      ),
+                      SizedBox(width: 8.0), // Adjust the spacing between the image and text
+                      Text(
+                        'Sign in with Google',
+                        style: TextStyle(color: Colors.green),
+                      ),
+                    ],
+                  ),
+                    style: ElevatedButton.styleFrom(
+                      
+                      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                      //padding: EdgeInsets.symmetric(horizontal: 16.0),
                     ),
                   ),
                 ),
-                // Login button
-                ElevatedButton(
-                  onPressed: () {
-                    // Handle login
-                  },
-                  child: Text('Login'),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
-                    padding: EdgeInsets.symmetric(horizontal: 64.0),
-                  ),
-                ),
                 // Sign up button
-                TextButton(
-                  onPressed: () {
-                    // Handle sign up
-                  },
-                  child: Text(
-                    'Sign Up For Free',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
+                
               ],
             ),
           ),

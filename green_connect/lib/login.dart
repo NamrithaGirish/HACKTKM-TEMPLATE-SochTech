@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:green_connect/mentor/mentor_profile.dart';
+import 'package:green_connect/user/home.dart';
+import 'package:green_connect/user/user_profile.dart';
 
 
 class ViewSelect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Galileo Design',
       home: Scaffold(
         appBar: AppBar(
           title: Text('Choose your role'),
@@ -14,22 +16,7 @@ class ViewSelect extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              TitleSection(),
-              ButtonSection(),
-              TextSection(),
-              ImageSection(),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class TitleSection extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
+              Container(
       padding: EdgeInsets.all(16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -56,16 +43,22 @@ class TitleSection extends StatelessWidget {
               ],
             ),
           ),
-          Icon(
-            Icons.star,
-            color: Colors.green[500],
-          ),
-          Text('41'),
         ],
+      ),
+    ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height/3,
+                child: ButtonSection()),
+              
+            ],
+          ),
+        ),
       ),
     );
   }
 }
+
 
 class ButtonSection extends StatelessWidget {
   @override
@@ -75,8 +68,8 @@ class ButtonSection extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          GestureDetector(onTap:(){},child: _buildButtonColumn(context, Icons.people, 'I\'m looking for guidance')),
-          _buildButtonColumn(context, Icons.laptop, 'I want to be a mentor'),
+          GestureDetector(onTap:(){Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UserProfilePage()));},child: _buildButtonColumn(context, Icons.people, 'I\'m looking for guidance')),
+          GestureDetector(onTap: (){Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MentorProfile()));},child: _buildButtonColumn(context, Icons.laptop, 'I want to be a mentor')),
         ],
       ),
     );
@@ -101,27 +94,5 @@ class ButtonSection extends StatelessWidget {
   }
 }
 
-class TextSection extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16),
-      child: Text(
-        'Galileo is a platform that connects aspiring professionals with experienced mentors in various fields. Whether you are looking for career advice, skill development, or networking opportunities, Galileo can help you achieve your goals. Join Galileo today and discover the benefits of learning from the best.',
-        style: TextStyle(
-          fontSize: 16,
-          color: Colors.black87,
-        ),
-      ),
-    );
-  }
-}
 
-class ImageSection extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Image.asset('assets/images/galileo.jpg'),
-    );
-  }
-}
+

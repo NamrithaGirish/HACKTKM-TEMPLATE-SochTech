@@ -1,153 +1,247 @@
-import 'package:flutter/material.dart';
-import 'package:green_connect/chat.dart';
-import 'package:green_connect/user/search_mentor.dart';
-import 'package:green_connect/user/user_profile.dart';
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, prefer_const_literals_to_create_immutables
 
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class UserHome extends StatefulWidget {
+  const UserHome({Key? key}) : super(key: key);
+
+  @override
+  State<UserHome> createState() => _UserHomeState();
+}
+
+class _UserHomeState extends State<UserHome> {
+
+  final TextEditingController searchController=TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Farmers First'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              // Search functionality
-            },
-          ),
-        ],
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: ListView(
         children: [
-          const SizedBox(height: 16),
-          const Center(
-            child: Text(
-              'Welcome to Farmers First',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.green,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+                  style: GoogleFonts.jura(
+                      textStyle: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14,
+                        color: Color.fromARGB(255, 0, 0, 0),
+                      )
+                    ),
+                  textAlign: TextAlign.center,
+                  controller: searchController,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    filled: true,
+                    fillColor:Color(0xFFF2F5F0),
+                      hintText: "Search for mentors",
+                      hintStyle: GoogleFonts.jura(
+                      textStyle: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14,
+                        color: Color.fromARGB(255, 0, 0, 0),
+                      )
+                    ),
+                      contentPadding: EdgeInsets.all(16),
+                  ),
               ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Previously Contacted',
+              style: GoogleFonts.jura(
+                      textStyle: TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 14,
+                        color: Color.fromARGB(255, 0, 0, 0),
+                      )
+                    ),
             ),
           ),
-          const SizedBox(height: 16),
-          SectionCard(
-            title: 'Pick your mentor',
-            image: 'assets/images/plant.jpg',
-            description:
-                'Get advice from experienced farmers, gardeners, and chefs.',
-            buttonText: 'Select mentor',
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MentorPage()));// Navigate to mentor selection page
-            },
+          Container(
+            height: 125,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                UserCard(
+                  name: 'Katherine T.',
+                  category: 'Crops',
+                ),
+                UserCard(
+                  name: 'Jennifer W.',
+                  category: 'Soil Health',
+                ),
+                UserCard(
+                  name: 'Michael S.',
+                  category: 'Water Management',
+                ),
+                UserCard(
+                  name: 'Judy L.',
+                  category: 'Plant Health',
+                ),
+              ],
+            ),
           ),
-          SectionCard(
-            title: 'Agriculture plans',
-            image: 'assets/images/plant.jpg',
-            description: 'Grow your own food with our step-by-step plans.',
-            buttonText: 'Start a plan',
-            onPressed: () {
-              // Navigate to plan selection page
-            },
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+            height: 40,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  child: Text('All Mentors'),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text('By Expertise'),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text('By Plant Type'),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text('By Name'),
+                ),
+              ],
+            ),
           ),
-          SectionCard(
-            title: 'Chat with us',
-            image: 'assets/images/plant.jpg',
-            description: 'Have questions about growing? Chat with our team.',
-            buttonText: 'Chat now',
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ChatUI()));// Navigate to chat page
-            },
+          ),
+          MentorListTile(
+            name: 'Katherine T.',
+            description: 'Katherine specializes in corn and soybean crops.',
+            category: 'Crops',
+          ),
+          MentorListTile(
+            name: 'Jennifer W.',
+            description: 'Jennifer is an expert in soil composition and fertility.',
+            category: 'Soil Health',
+          ),
+          MentorListTile(
+            name: 'Michael S.',
+            description: 'Michael has extensive experience in irrigation and drainage.',
+            category: 'Water Management',
+          ),
+          MentorListTile(
+            name: 'Judy L.',
+            description: 'Judy is a botanist specializing in plant diseases and pest management.',
+            category: 'Plant Health',
           ),
         ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items:  [
-          BottomNavigationBarItem(
-            icon: GestureDetector(child: Icon(Icons.person,color: Colors.black,),onTap: (){Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UserProfilePage()));},),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart,color: Colors.black,),
-            label: 'Cart',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people,color: Colors.black,),
-            label: 'Mentor',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list,color: Colors.black,),
-            label: 'Plans',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat,color: Colors.black,),
-            label: 'Chat',
-          ),
-        ],
-        currentIndex: 0, // Change this to reflect the current page
-        onTap: (index) {
-          // Navigate to the selected page
-        },
       ),
     );
   }
 }
 
-class SectionCard extends StatelessWidget {
-  final String title;
-  final String image;
-  final String description;
-  final String buttonText;
-  final VoidCallback onPressed;
-  const SectionCard({
+class UserCard extends StatelessWidget {
+  final String name;
+  final String category;
+  const UserCard({
     Key? key,
-    required this.title,
-    required this.image,
-    required this.description,
-    required this.buttonText,
-    required this.onPressed,
+    required this.name,
+    required this.category,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.all(16),
-      child: Column(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 25,
+              backgroundColor: Colors.grey,
+              child: Text(
+                name[0],
+                style: TextStyle(
+                  fontSize: 24,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            SizedBox(height: 8),
+            Text(
+              name,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              'Category: $category',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MentorListTile extends StatelessWidget {
+  final String name;
+  final String description;
+  final String category;
+  const MentorListTile({
+    Key? key,
+    required this.name,
+    required this.description,
+    required this.category,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: CircleAvatar(
+        radius: 25,
+        backgroundColor: Colors.grey,
+        child: Text(
+          name[0],
+          style: TextStyle(
+            fontSize: 24,
+            color: Colors.white,
+          ),
+        ),
+      ), 
+      title: Text(
+        name,
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      subtitle: Column(
         children: [
-          Image.asset(image, height: 200, fit: BoxFit.cover),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  description,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                ElevatedButton(
-                  child: Text(buttonText),
-                  onPressed: onPressed,
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
-                  ),
-                ),
-              ],
+          Text(
+            description,
+            style: TextStyle(
+              fontSize: 16,
             ),
           ),
+          Text(
+        'Category: $category',
+        style: TextStyle(
+          fontSize: 14,
+          color: Colors.grey,
+        ),
+      ),
         ],
       ),
     );

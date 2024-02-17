@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class UserProfilePage extends StatelessWidget {
@@ -36,6 +38,15 @@ class UserProfilePage extends StatelessWidget {
             style: TextStyle(fontSize: 18, color: Colors.grey),
           ),
           SizedBox(height: 20),
+          Text(
+              'About',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+          Text(
+              'Description',
+              style: TextStyle(fontSize: 14,color: Colors.grey),
+            ),
           Expanded(
             child: ListView(
               children: [
@@ -43,27 +54,11 @@ class UserProfilePage extends StatelessWidget {
                   leading: Icon(Icons.email),
                   title: Text('gloria.kim@gmail.com'),
                 ),
-                ListTile(
-                  leading: Icon(Icons.phone),
-                  title: Text('+1 415-123-4567'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.circle),
-                  title: Text('Active'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.calendar_today),
-                  title: Text('01/12/2022'),
-                ),
+                
               ],
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              // TODO: implement block account logic
-            },
-            child: Text('Block Account'),
-          ),
+          
           SizedBox(height: 20),
         ],
       ),
