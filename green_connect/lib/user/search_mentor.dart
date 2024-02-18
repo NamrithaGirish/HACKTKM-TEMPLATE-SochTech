@@ -17,8 +17,10 @@ class MentorPage extends StatefulWidget {
 class _MentorPageState extends State<MentorPage> {
   final TextEditingController searchController = TextEditingController();
   int _selectedIndex = 0;
-  int length=0;
+  int length = 0;
   List<dynamic>? mentors;
+  List<dynamic>? mentor;
+  int lengths = 0;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -50,8 +52,23 @@ class _MentorPageState extends State<MentorPage> {
       List<dynamic>? value = await user;
       if (value != null) {
         setState(() {
-          length=value.length;
-          mentors=value;
+          length = value.length;
+          mentors = value;
+        });
+      }
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  Future<void> _setProfileOthers() async {
+    try {
+      Future<List<dynamic>?> users = ApiService().OtherMentors();
+      List<dynamic>? values = await users;
+      if (values != null) {
+        setState(() {
+          lengths = values.length;
+          mentor = values;
         });
       }
     } catch (error) {
@@ -64,6 +81,7 @@ class _MentorPageState extends State<MentorPage> {
     // TODO: implement initState
     super.initState();
     _setProfile();
+    _setProfileOthers();
   }
 
   @override
@@ -122,13 +140,12 @@ class _MentorPageState extends State<MentorPage> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  for(int i=0;i<length;i++)...[
+                  for (int i = 0; i < length; i++) ...[
                     MentorCard(
-                    name: mentors![i]["name"],
-                    category: mentors![i]["domain"],
-                  ),
+                      name: mentors![i]["name"],
+                      category: mentors![i]["domain"],
+                    ),
                   ],
-                  
                 ],
               ),
             ),
@@ -159,28 +176,16 @@ class _MentorPageState extends State<MentorPage> {
                 ),
               ),
             ),
-            MentorListTile(
-              name: 'Katherine T.',
-              description: 'Katherine specializes in corn and soybean crops.',
-              category: 'Crops',
-            ),
-            MentorListTile(
-              name: 'Jennifer W.',
-              description:
-                  'Jennifer is an expert in soil composition and fertility.',
-              category: 'Soil Health',
-            ),
-            MentorListTile(
-              name: 'Michael S.',
-              description:
-                  'Michael has extensive experience in irrigation and drainage.',
-              category: 'Water Management',
-            ),
-            MentorListTile(
-              name: 'Judy L.',
-              description:
-                  'Judy is a botanist specializing in plant diseases and pest management.',
-              category: 'Plant Health',
+            ListView(
+              scrollDirection: Axis.vertical,
+              children: [
+                for (int i = 0; i < lengths; i++) ...[
+                  MentorCard(
+                    name: mentor![i]["name"],
+                    category: mentor![i]["domain"],
+                  ),
+                ],
+              ],
             ),
           ],
         ),

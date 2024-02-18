@@ -8,21 +8,43 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
 class ApiService {
-
-
   Future<List<dynamic>?> getUserByID(int id) async {
     try {
       var url = Uri.parse(
           ApiConstants.baseUrl + ApiConstants.getUserByID + id.toString());
-          
-      var response = await http.get(url,headers:{'ngrok-skip-browser-warning':'true'} );
+
+      var response =
+          await http.get(url, headers: {'ngrok-skip-browser-warning': 'true'});
       if (response.statusCode == 200) {
         print("hello");
         List<dynamic> responseBody = json.decode(response.body);
         print(responseBody.runtimeType);
         List<dynamic> user = responseBody;
-        
+
         print(user[0]);
+        //print(user['id']);
+        return user;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
+
+  Future<List<dynamic>?> getMentorByID(int id) async {
+    try {
+      var url = Uri.parse(
+          ApiConstants.baseUrl + ApiConstants.getUserByID + id.toString());
+
+      var response =
+          await http.get(url, headers: {'ngrok-skip-browser-warning': 'true'});
+      if (response.statusCode == 200) {
+        print("hello");
+        Map<String, dynamic> responseBody = json.decode(response.body);
+        print(responseBody.runtimeType);
+        List<dynamic> user = responseBody["error"];
+
+        print(responseBody["error"]);
         //print(user['id']);
         return user;
       }
@@ -36,15 +58,16 @@ class ApiService {
     try {
       var url = Uri.parse(
           ApiConstants.baseUrl + ApiConstants.prevCont + id.toString());
-          
-      var response = await http.get(url,headers:{'ngrok-skip-browser-warning':'true'} );
+
+      var response =
+          await http.get(url, headers: {'ngrok-skip-browser-warning': 'true'});
       if (response.statusCode == 200) {
         print("hello");
         print(response.body);
-        Map<String,dynamic> responseBody = json.decode(response.body);
+        Map<String, dynamic> responseBody = json.decode(response.body);
         print(responseBody);
-       // List<dynamic> user = responseBody;
-        
+        // List<dynamic> user = responseBody;
+
         print(responseBody["prev_mentors"]);
         //print(user['id']);
         return responseBody["prev_mentors"];
@@ -78,16 +101,18 @@ class ApiService {
     return null;
   }
 
-  Future<List<String>> allTeams() async {
+  Future<List<dynamic>> OtherMentors() async {
     try {
-      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.allTeams);
+      var url = Uri.parse(ApiConstants.baseUrl +
+          ApiConstants.otherMentors +
+          ApiConstants.id.toString());
       var response = await http.get(url);
       if (response.statusCode == 200) {
         Map<String, dynamic> responseBody = json.decode(response.body);
-        List<dynamic> dynamicTeam = responseBody["teams"];
-        List<String> teams =
-            dynamicTeam.map((item) => item.toString()).toList();
-        return teams;
+        // List<dynamic> dynamicTeam = responseBody["other-mentors"];
+        print(responseBody["othe_mentors"]);
+
+        return responseBody["other_mentors"];
       }
     } catch (e) {
       log(e.toString());
@@ -122,8 +147,8 @@ class ApiService {
     }
   }
 
-  Future<Map<String, dynamic>?> addComment(int reciever_id, File _imageFile, String comment,
-      int sender_id, String linkedin) async {
+  Future<Map<String, dynamic>?> addComment(int reciever_id, File _imageFile,
+      String comment, int sender_id, String linkedin) async {
     var uri = Uri.parse(ApiConstants.baseUrl +
         ApiConstants.addComments); // Replace with your API endpoint
 
@@ -141,13 +166,13 @@ class ApiService {
 
     try {
       var response = await http.Response.fromStream(await request.send());
-      
+
       // Check the response
       Map<String, dynamic> responseBody = json.decode(response.body);
       print(response.statusCode);
       if (response.statusCode == 201) {
         print('Data sent successfully');
-         return null;
+        return null;
       } else {
         print('Failed to send data. Error: ${response.reasonPhrase}');
         return responseBody;
