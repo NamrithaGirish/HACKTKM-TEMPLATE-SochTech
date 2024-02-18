@@ -1,10 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:green_connect/mentor/mentor_form.dart';
 import 'package:green_connect/mentor/mentor_home.dart';
-import 'package:green_connect/mentor/mentor_profile.dart';
 import 'package:green_connect/user/home.dart';
-import 'package:green_connect/user/user_profile.dart';
 
 class ViewSelect extends StatefulWidget {
   @override
@@ -72,7 +71,7 @@ class _ViewSelectState extends State<ViewSelect> {
                           MaterialPageRoute(builder: (context) => UserHome()));
                     } else if (selectedOption == 'mentor') {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => MentorHome()));
+                          builder: (context) => MentorForm()));
                     }
                   },
                   child: Text(

@@ -49,16 +49,12 @@ class _MentorPageState extends State<MentorPage> {
   Future<void> _setProfile() async {
     try {
       Future<List<dynamic>?> user = ApiService().getPrevMent(ApiConstants.id);
-      Future<List<dynamic>?> users = ApiService().otherMentors();
-      List<dynamic>? values = await users;
       List<dynamic>? value = await user;
-      if (value != null && values!=null) {
+      if (value != null) {
         setState(() {
           length = value.length;
           mentors = value;
-          lengths = values.length;
-          mentor = values;
-          print("hereeee"+mentor![0]);
+          
         });
       }
     } catch (error) {
@@ -185,13 +181,11 @@ class _MentorPageState extends State<MentorPage> {
            Column(
             
   children: [
-    for (int i = 0; i < lengths; i++) ...[
-                    MentorListTile(
-                      name: mentor![i]["name"],
-                      category: mentor![i]["domain"],
-                      description: mentor![i]["description"],
+     MentorListTile(
+                      name: "Joseph",
+                      category: "Fruits",
+                      description: "Graduate student. Loves fruits",
                     ),
-                  ],
     ],
 ),
 

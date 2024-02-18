@@ -5,9 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:green_connect/api/api_services.dart';
 import 'package:green_connect/chat.dart';
 import 'package:green_connect/mentor/mentor_profile.dart';
-import 'package:green_connect/user/home.dart';
-import 'package:green_connect/user/search_mentor.dart';
-import 'package:green_connect/user/user_profile.dart';
 
 class MentorHome extends StatefulWidget {
   const MentorHome({Key? key}) : super(key: key);
