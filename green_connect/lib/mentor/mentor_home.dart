@@ -46,27 +46,29 @@ class _MentorHomeState extends State<MentorHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar:  AppBar(
+        appBar: AppBar(
           toolbarHeight: 100,
           title: Column(
             children: [
-              Text('GREEN CONNECT',style: GoogleFonts.jura(
-                      textStyle: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 20,
-                    color: Color.fromARGB(255, 0, 0, 0),
-                  )),),
-              SizedBox(height: 10,),
-              
+              Text(
+                'GREEN CONNECT',
+                style: GoogleFonts.jura(
+                    textStyle: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 20,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                )),
+              ),
+              SizedBox(
+                height: 10,
+              ),
             ],
           ),
           backgroundColor: Colors.lightGreen[200],
-          
         ),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: 2,
@@ -95,21 +97,6 @@ class _MentorHomeState extends State<MentorHome> {
                     'Hey there!I am an expert in soil composition and fertility.',
                 category: 'Soil Health',
               ),
-              SizedBox(height: 10),
-              MentorListTile(
-                name: 'Michael S.',
-                description: 'Im here to answer the questions you might have',
-                category: 'Water Management',
-              ),
-              SizedBox(height: 10),
-              MentorListTile(
-                name: 'Judy L.',
-                description: 'I have 3 yrs experinece in pest management',
-                category: 'Plant Health',
-              ),
-              SizedBox(
-                height: 20,
-              ),
               Text(
                 'Previous Clients',
                 style: GoogleFonts.jura(
@@ -128,18 +115,6 @@ class _MentorHomeState extends State<MentorHome> {
                     MentorCard(
                       name: 'Katherine T.',
                       category: 'Crops',
-                    ),
-                    MentorCard(
-                      name: 'Jennifer W.',
-                      category: 'Soil Health',
-                    ),
-                    MentorCard(
-                      name: 'Michael S.',
-                      category: 'Water Management',
-                    ),
-                    MentorCard(
-                      name: 'Judy L.',
-                      category: 'Plant Health',
                     ),
                   ],
                 ),
@@ -186,11 +161,11 @@ class MentorListTile extends StatelessWidget {
     return GestureDetector(
       child: ListTile(
         leading: CircleAvatar(
-          radius: 25,
-          backgroundColor: Colors.grey,
-          backgroundImage: NetworkImage('https://th.bing.com/th/id/R.50bfb50cc7e156ccca8dc6258047aca4?rik=xT8mAi9txYwWkw&riu=http%3a%2f%2fpelaez.fabianramirez.co%2fwp-content%2fuploads%2f2017%2f02%2fteam-2.jpg&ehk=HOHEsSS9yxRwVSSi%2bJLx0Mk%2fBYNm2qj8asedsPwwbkI%3d&risl=&pid=ImgRaw&r=0',)
-        
-        ),
+            radius: 25,
+            backgroundColor: Colors.grey,
+            backgroundImage: NetworkImage(
+              'https://th.bing.com/th/id/R.50bfb50cc7e156ccca8dc6258047aca4?rik=xT8mAi9txYwWkw&riu=http%3a%2f%2fpelaez.fabianramirez.co%2fwp-content%2fuploads%2f2017%2f02%2fteam-2.jpg&ehk=HOHEsSS9yxRwVSSi%2bJLx0Mk%2fBYNm2qj8asedsPwwbkI%3d&risl=&pid=ImgRaw&r=0',
+            )),
         title: Text(
           name,
           style: TextStyle(
@@ -232,11 +207,11 @@ class MentorCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
-              radius: 25,
-              backgroundColor: Colors.grey,
-              backgroundImage: NetworkImage('https://th.bing.com/th/id/R.50bfb50cc7e156ccca8dc6258047aca4?rik=xT8mAi9txYwWkw&riu=http%3a%2f%2fpelaez.fabianramirez.co%2fwp-content%2fuploads%2f2017%2f02%2fteam-2.jpg&ehk=HOHEsSS9yxRwVSSi%2bJLx0Mk%2fBYNm2qj8asedsPwwbkI%3d&risl=&pid=ImgRaw&r=0',)
-        
-            ),
+                radius: 25,
+                backgroundColor: Colors.grey,
+                backgroundImage: NetworkImage(
+                  'https://th.bing.com/th/id/R.50bfb50cc7e156ccca8dc6258047aca4?rik=xT8mAi9txYwWkw&riu=http%3a%2f%2fpelaez.fabianramirez.co%2fwp-content%2fuploads%2f2017%2f02%2fteam-2.jpg&ehk=HOHEsSS9yxRwVSSi%2bJLx0Mk%2fBYNm2qj8asedsPwwbkI%3d&risl=&pid=ImgRaw&r=0',
+                )),
             SizedBox(height: 8),
             Text(
               'Katherine',

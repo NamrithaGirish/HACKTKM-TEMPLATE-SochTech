@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:green_connect/mentor/mentor_home.dart';
 
 class MentorForm extends StatefulWidget {
   const MentorForm({Key? key}) : super(key: key);
@@ -103,7 +104,8 @@ class _MentorFormState extends State<MentorForm> {
                 controller: descriptionController,
                 decoration: const InputDecoration(
                   labelText: 'Description',
-                  hintText: 'Tell us about your expertise and mentoring approach',
+                  hintText:
+                      'Tell us about your expertise and mentoring approach',
                   border: OutlineInputBorder(),
                 ),
                 maxLines: 3,
@@ -114,7 +116,11 @@ class _MentorFormState extends State<MentorForm> {
                   // Pick a file (resume)
                   String? filePath = await FilePicker.platform.pickFiles(
                     type: FileType.custom,
-                    allowedExtensions: ['pdf', 'doc', 'docx'], // Specify allowed file types
+                    allowedExtensions: [
+                      'pdf',
+                      'doc',
+                      'docx'
+                    ], // Specify allowed file types
                   ).then((result) => result?.files.single.path);
 
                   if (filePath != null) {
@@ -135,6 +141,8 @@ class _MentorFormState extends State<MentorForm> {
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => MentorHome()));
                   // TODO: Implement the logic to submit the form and navigate to the next screen
                 },
                 child: const Text('Submit'),

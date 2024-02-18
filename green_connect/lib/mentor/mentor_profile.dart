@@ -1,6 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:green_connect/api/api_services.dart';
+import 'package:green_connect/mentor/mentor_quiz.dart';
 import 'package:green_connect/user/home.dart';
 import 'package:green_connect/user/search_mentor.dart';
 import 'package:green_connect/user/user_profile.dart';
@@ -14,7 +18,26 @@ class MentorProfile extends StatefulWidget {
 
 class _MentorProfileState extends State<MentorProfile> {
   int _selectedIndex = 0;
-  String _currentQuizLevel = ''; // Add a variable to store the current quiz level
+  String name = '';
+  String location = '';
+  String desc = '';
+  String _currentQuizLevel =
+      ''; // Add a variable to store the current quiz level
+  Future<void> _setProfile() async {
+    try {
+      Future<List<dynamic>?> user = ApiService().getUserByID(1);
+      List<dynamic>? value = await user;
+      if (value != null) {
+        setState(() {
+          name = value[0]["name"];
+          location = value[0]["location"];
+          desc = value[0]["description"];
+        });
+      }
+    } catch (error) {
+      print(error);
+    }
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -38,6 +61,13 @@ class _MentorProfileState extends State<MentorProfile> {
         print('Profile tapped');
         break;
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _setProfile();
+    super.initState();
   }
 
   void _startQuiz(String level) {
@@ -69,11 +99,11 @@ class _MentorProfileState extends State<MentorProfile> {
             ),
             SizedBox(height: 10),
             Text(
-              'Gloria Kim',
+              name,
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             Text(
-              'San Francisco, CA',
+              location,
               style: TextStyle(fontSize: 18, color: Colors.grey),
             ),
             SizedBox(
@@ -85,9 +115,10 @@ class _MentorProfileState extends State<MentorProfile> {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             Text(
-              'I\'m an agricultural engineer at Google. I specialize in sustainable farming, crop management, and technology in agriculture. I\'m passionate about mentoring and sharing my knowledge to support the next generation of agri-tech leaders.',
+              desc,
               style: TextStyle(fontSize: 15, color: Colors.grey),
             ),
+            SizedBox(height: 30),
             Text(
               'Quiz',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -98,7 +129,10 @@ class _MentorProfileState extends State<MentorProfile> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    // TODO: Implement quiz logic for beginner level
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => MentorQuiz(
+                            title:
+                                'Beginner Quiz'))); // TODO: Implement quiz logic for beginner level
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lightGreen,
@@ -108,16 +142,23 @@ class _MentorProfileState extends State<MentorProfile> {
                 ),
                 ElevatedButton(
                   onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            MentorQuiz(title: 'Intermediate Quiz')));
                     // TODO: Implement quiz logic for intermediate level
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lightGreen,
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   ),
-                  child: Text('Intermediate Quiz', style: TextStyle(fontSize: 12)),
+                  child:
+                      Text('Intermediate Quiz', style: TextStyle(fontSize: 12)),
                 ),
                 ElevatedButton(
                   onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            MentorQuiz(title: 'Expert Quiz')));
                     // TODO: Implement quiz logic for expert level
                   },
                   style: ElevatedButton.styleFrom(
