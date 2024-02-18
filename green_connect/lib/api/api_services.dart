@@ -101,16 +101,16 @@ class ApiService {
     return null;
   }
 
-  Future<List<dynamic>> OtherMentors() async {
+  Future<List<dynamic>> otherMentors() async {
     try {
       var url = Uri.parse(ApiConstants.baseUrl +
           ApiConstants.otherMentors +
           ApiConstants.id.toString());
-      var response = await http.get(url);
+      var response = await http.get(url,headers:{'ngrok-skip-browser-warning':'true'});
       if (response.statusCode == 200) {
         Map<String, dynamic> responseBody = json.decode(response.body);
         // List<dynamic> dynamicTeam = responseBody["other-mentors"];
-        print(responseBody["othe_mentors"]);
+        print(responseBody["other_mentors"]);
 
         return responseBody["other_mentors"];
       }

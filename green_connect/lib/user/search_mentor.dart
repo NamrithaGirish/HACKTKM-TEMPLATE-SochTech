@@ -49,11 +49,16 @@ class _MentorPageState extends State<MentorPage> {
   Future<void> _setProfile() async {
     try {
       Future<List<dynamic>?> user = ApiService().getPrevMent(ApiConstants.id);
+      Future<List<dynamic>?> users = ApiService().otherMentors();
+      List<dynamic>? values = await users;
       List<dynamic>? value = await user;
-      if (value != null) {
+      if (value != null && values!=null) {
         setState(() {
           length = value.length;
           mentors = value;
+          lengths = values.length;
+          mentor = values;
+          print("hereeee"+mentor![0]);
         });
       }
     } catch (error) {
@@ -63,12 +68,13 @@ class _MentorPageState extends State<MentorPage> {
 
   Future<void> _setProfileOthers() async {
     try {
-      Future<List<dynamic>?> users = ApiService().OtherMentors();
+      Future<List<dynamic>?> users = ApiService().otherMentors();
       List<dynamic>? values = await users;
       if (values != null) {
         setState(() {
           lengths = values.length;
           mentor = values;
+          print("hereeee"+mentor![0]);
         });
       }
     } catch (error) {
@@ -176,17 +182,21 @@ class _MentorPageState extends State<MentorPage> {
                 ),
               ),
             ),
-            ListView(
-              scrollDirection: Axis.vertical,
-              children: [
-                for (int i = 0; i < lengths; i++) ...[
-                  MentorCard(
-                    name: mentor![i]["name"],
-                    category: mentor![i]["domain"],
-                  ),
-                ],
-              ],
-            ),
+           Column(
+            
+  children: [
+    for (int i = 0; i < lengths; i++) ...[
+                    MentorListTile(
+                      name: mentor![i]["name"],
+                      category: mentor![i]["domain"],
+                      description: mentor![i]["description"],
+                    ),
+                  ],
+    ],
+),
+
+            
+            
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
